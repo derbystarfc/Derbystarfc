@@ -1,18 +1,33 @@
-DERBY STAR FC WEBSITE — PLAYER PROFILE UPDATE
+DERBY STAR FC — HEAD COACH PROFILE
+=================================
 
-Open index.html in a browser to preview the website.
+FILES
+- coach.html
+- images/sani-h-mustapha.jpg
 
-Included:
-- Derby Star FC crest and club details
-- Player recruitment form with required player photo upload
-- Pending / approved / rejected application states in the browser preview
-- Approved player profiles displayed on the public squad and player profile sections
-- Club photo gallery
-- Weekly player and team statistics sections
-- Search-engine metadata and SportsTeam structured data
+UPLOAD TO YOUR EXISTING GITHUB REPOSITORY
+1. Open your Derby Star FC repository on GitHub.
+2. Click Add file > Upload files.
+3. Upload coach.html and the images folder (with sani-h-mustapha.jpg inside).
+   Keep the folder structure exactly as shown.
+4. Scroll down and click Commit changes.
 
-IMPORTANT BEFORE PUBLIC LAUNCH:
-This is a front-end demo. Browser localStorage is only available in the same browser/device and is not a shared club database. The management panel is not secured. The mailto link opens the applicant's email app; it does not automatically deliver or attach the uploaded photo. For real recruitment, connect a secure backend/database, private manager authentication, server-side image storage, email notifications, and server-side approval controls. Search engines can index public approved player profiles only after the live website is deployed and crawlable. Do not publish private contact details or sensitive information.
+YOUR NEW PAGE WILL BE:
+https://derbystarfc.github.io/Derbystarfc/coach.html
 
+OPTIONAL: ADD A LINK ON YOUR HOMEPAGE
+To make the profile easy to find from the main site:
+1. Open index.html in your repository and click the pencil (Edit) icon.
+2. Find the existing navigation links in the header.
+3. Add this link beside the other navigation links:
+   <a href="coach.html">Head Coach</a>
+4. Commit changes.
 
-See MANAGER-SETUP.txt for the manager-only approval portal setup.
+IMPORTANT
+- Do not upload coach.html as index.html.
+- Do not replace your existing index.html; that is your current homepage.
+- The image path is relative: images/sani-h-mustapha.jpg.
+- GitHub Pages may take a short time to publish after committing.
+
+Official GitHub Pages documentation:
+https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site
