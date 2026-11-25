@@ -13,7 +13,7 @@
 </main>
 <script type="module">
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const URL='https://naeobofkxydobzdzhsiq.supabase.co',KEY='sb_publishable_5tTsV1siTHRheib-qVcIdA__MuP49w6';
+const URL='https://naeobofkxydobzdzhsiq.supabase.co',KEY='sb_publishable_1Lw8u3Ec7QlyrcdLglbyNA_OkhBr2l9';
 const configured=!URL.startsWith('PASTE_')&&!KEY.startsWith('PASTE_');
 const db=configured?createClient(URL,KEY):null;
 const $=id=>document.getElementById(id), esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
