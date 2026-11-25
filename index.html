@@ -164,8 +164,8 @@ td:first-child{font-weight:800;color:#07133e}
 
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const SUPABASE_URL = 'PASTE_YOUR_SUPABASE_PROJECT_URL';
-const SUPABASE_ANON_KEY = 'PASTE_YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://naeobofkxydobzdzhsiq.supabase.co';
+const SUPABASE_ANON_KEY = 'https://naeobofkxydobzdzhsiq.supabase.co';
 const configured = !SUPABASE_URL.startsWith('PASTE_') && !SUPABASE_ANON_KEY.startsWith('PASTE_');
 const db = configured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const form=document.getElementById('playerForm');
