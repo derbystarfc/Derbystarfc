@@ -165,7 +165,7 @@ td:first-child{font-weight:800;color:#07133e}
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const SUPABASE_URL = 'https://naeobofkxydobzdzhsiq.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hZW9ib2ZreHlkb2J6ZHpoc2lxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1Njk2MDAsImV4cCI6MjExMTE0NTYwMH0.aw5G_IEHPAHMznz0LMzoN37vpDiL6W81Pb9itUfhYvA;
+const SUPABASE_ANON_KEY = 'sb_publishable_5tTsV1siTHRheib-qVcIdA__MuP49w6;
 const configured = !SUPABASE_URL.startsWith('PASTE_') && !SUPABASE_ANON_KEY.startsWith('PASTE_');
 const db = configured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const form=document.getElementById('playerForm');
