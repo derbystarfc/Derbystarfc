@@ -22,14 +22,13 @@ async function sessionCheck(){if(!db){$('loginMsg').textContent='Setup required:
 async function showDashboard(){
  const {data:{user}}=await db.auth.getUser();
  const {data:isManager,error}=await db.rpc('is_derby_manager');
-
-if(error || isManager !== true){
+ if(error || isManager !== true){
   await db.auth.signOut();
-  $('loginMsg').textContent = error
-    ? 'Manager verification failed: ' + error.message
-    : 'This account is not authorized as a Derby Star FC manager.';
+    $('loginMsg').textContent = error
+  ? 'Manager verification failed: ' + error.message
+     : 'This account is not authorized as a Derby Star FC manager.';
   return;
-}
+  }
  $('login').classList.add('hidden');$('dashboard').classList.remove('hidden');await loadApps();
 }
 async function loadApps(){
