@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+# Add a Sitemap: https://YOUR-DOMAIN/sitemap.xml line after choosing and publishing your domain.

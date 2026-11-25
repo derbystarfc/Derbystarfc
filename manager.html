@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Derby Star FC | Private Manager Portal</title>
+<style>
+:root{font-family:Arial,sans-serif;color:#101a38;background:#f3f5fa}*{box-sizing:border-box}body{margin:0}.top{background:#07133e;color:white;padding:22px max(20px,calc((100% - 1050px)/2))}.wrap{max-width:1050px;margin:30px auto;padding:0 18px}.panel{background:white;border:1px solid #e1e6f0;border-radius:14px;padding:22px;margin:14px 0;box-shadow:0 4px 18px #07133e0a}input,button{font:inherit;padding:12px;border-radius:8px}input{border:1px solid #cbd3e2;width:100%;margin:7px 0 14px}button{border:0;background:#07133e;color:white;font-weight:bold;cursor:pointer}.green{background:#13834b}.red{background:#a52a36}.muted{color:#65708a}.app{display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;border-top:1px solid #e7eaf1;padding:16px 0}.app img{width:100px;height:100px;object-fit:cover;border-radius:9px}.actions{display:flex;gap:8px;flex-wrap:wrap}.hidden{display:none!important}@media(max-width:650px){.app{grid-template-columns:80px 1fr}.app img{width:75px;height:75px}.actions{grid-column:1/-1}}
+</style></head><body>
+<header class="top"><strong>DERBY STAR FC</strong><div>Private Management Approval Portal</div></header>
+<main class="wrap">
+<section id="login" class="panel"><h2>Manager sign in</h2><p class="muted">This portal is restricted to manager accounts authorized by the club.</p>
+<label>Email</label><input id="email" type="email" autocomplete="username" placeholder="Manager email">
+<label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
+<button id="signIn">Sign in securely</button><p id="loginMsg" class="muted"></p></section>
+<section id="dashboard" class="hidden"><div class="panel"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><h2>Registration applications</h2><p class="muted">Approve or reject each player. Only approved players appear on the public website.</p></div><button id="signOut">Sign out</button></div><div id="message" class="muted"></div><div id="apps"></div></div></section>
+</main>
+<script type="module">
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const URL='PASTE_YOUR_SUPABASE_PROJECT_URL',KEY='PASTE_YOUR_SUPABASE_ANON_KEY';
+const configured=!URL.startsWith('PASTE_')&&!KEY.startsWith('PASTE_');
+const db=configured?createClient(URL,KEY):null;
+const $=id=>document.getElementById(id), esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function msg(t){$('message').textContent=t}
+async function sessionCheck(){if(!db){$('loginMsg').textContent='Setup required: add the Supabase project URL and anon key.';return;}const {data}=await db.auth.getSession();if(data.session)await showDashboard();}
+async function showDashboard(){
+ const {data:{user}}=await db.auth.getUser();
+ const {data:manager,error}=await db.from('manager_users').select('user_id').eq('user_id',user.id).maybeSingle();
+ if(error||!manager){await db.auth.signOut();$('loginMsg').textContent='This account is not authorized as a Derby Star FC manager.';return;}
+ $('login').classList.add('hidden');$('dashboard').classList.remove('hidden');await loadApps();
+}
+async function loadApps(){
+ msg('Loading applications…');
+ const {data,error}=await db.from('player_applications').select('*').order('created_at',{ascending:false});
+ if(error){msg(error.message);return;}
+ $('apps').innerHTML=data.length?data.map(a=>`<article class="app"><div>${a.photo_url?`<img src="${esc(a.photo_url)}" alt="">`:''}</div><div><strong>${esc(a.full_name)}</strong><p>${esc(a.position)} · ${esc(a.email)} · ${esc(a.phone)}</p><p class="muted">DOB: ${esc(a.date_of_birth)} · Foot: ${esc(a.preferred_foot)} · Previous club: ${esc(a.previous_club)}</p><p>${esc(a.experience)} ${esc(a.bio)}</p><b>Status: ${esc(a.status)}</b></div><div class="actions">${a.status==='PENDING'?`<button class="green" data-id="${a.id}" data-status="APPROVED">Approve</button><button class="red" data-id="${a.id}" data-status="REJECTED">Reject</button>`:''}</div></article>`).join(''):'<p>No applications received yet.</p>';
+ msg(`${data.length} application(s)`);
+ $('apps').querySelectorAll('button[data-id]').forEach(b=>b.addEventListener('click',()=>decide(b.dataset.id,b.dataset.status)));
+}
+async function decide(id,status){
+ msg('Saving decision…');
+ const {error}=await db.from('player_applications').update({status,reviewed_at:new Date().toISOString()}).eq('id',id);
+ if(error){msg(error.message);return;}await loadApps();
+}
+$('signIn').addEventListener('click',async()=>{if(!db){$('loginMsg').textContent='Setup required: configure Supabase first.';return;}$('loginMsg').textContent='Signing in…';const {error}=await db.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error){$('loginMsg').textContent=error.message;return;}await showDashboard();});
+$('signOut').addEventListener('click',async()=>{await db.auth.signOut();$('dashboard').classList.add('hidden');$('login').classList.remove('hidden');});
+sessionCheck();
+</script></body></html>

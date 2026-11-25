@@ -1,0 +1,21 @@
+DERBY STAR FC SEARCH VISIBILITY
+
+This build includes:
+- Search-friendly page title and description
+- Relevant club-name and location terms
+- Open Graph sharing metadata
+- SportsTeam structured data for search engines
+- robots.txt allowing search crawlers
+
+Important launch steps:
+1. Publish the site on a permanent domain you control.
+2. Replace the placeholder domain in robots.txt and create a sitemap.xml using that exact domain.
+3. Verify the domain in Google Search Console and submit the sitemap.
+4. Add the live website URL to Derby Star FC's Instagram bio and other official profiles.
+5. Keep club name, Ota/Ogun State location, phone and Instagram consistent across official profiles.
+
+PLAYER PRIVACY:
+Player registration applications and personal contact details must remain private and must not be exposed to search engines. Only players formally approved by management should be considered for a public squad profile, and only with the player's informed permission. Do not publish date of birth, phone, email, home address or application records in public pages.
+
+LIMITATION:
+Search engines decide when and whether to index a newly published site. SEO metadata improves discoverability but cannot guarantee a ranking or immediate appearance. This static preview does not itself submit the site to search engines or provide a secure online registration database.

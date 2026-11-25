@@ -1,0 +1,38 @@
+DERBY STAR FC — MANAGER-ONLY PLAYER APPROVAL
+
+WHAT CHANGED
+- Player registration submissions are stored in a central Supabase database (not browser local storage).
+- New applications start as PENDING.
+- Applicants cannot approve themselves or set their own status.
+- A separate manager portal is provided at /manager.html.
+- Only manager accounts explicitly allowlisted in manager_users can review, approve, or reject applications.
+- The public website displays approved profiles only.
+- The old public management panel and mailto/localStorage approval demo have been removed.
+
+IMPORTANT: BACKEND SETUP IS REQUIRED BEFORE ACCEPTING REAL APPLICATIONS
+The ZIP is Supabase-ready but cannot securely operate until you create a Supabase project and add its project URL/key to BOTH index.html and manager.html.
+
+SETUP
+1. Create a project at https://supabase.com/dashboard
+2. In Project Settings > API, copy the Project URL and anon/public key.
+3. In index.html and manager.html replace:
+   PASTE_YOUR_SUPABASE_PROJECT_URL
+   PASTE_YOUR_SUPABASE_ANON_KEY
+   with the values from your project. Never put the service_role key in website files.
+4. In Supabase > SQL Editor, run the complete contents of supabase-setup.sql.
+5. In Supabase > Authentication > Users, create the manager's account with a private email/password. Turn off public sign-ups in Authentication settings.
+6. Copy the manager user's UUID from Authentication > Users, then run:
+   insert into public.manager_users(user_id) values ('PASTE-MANAGER-USER-UUID');
+   Add only trusted manager accounts to this table.
+7. Deploy the whole website folder. The manager opens:
+   https://YOUR-DOMAIN/manager.html
+   Sign in with the manager account. Keep this URL private; security comes from authentication and database policies, not from hiding the URL.
+8. Test with a sample player application. Confirm it appears as PENDING in the manager portal, is absent from public player profiles, then approve it and confirm it appears publicly.
+
+SECURITY NOTES
+- Do not share the manager password.
+- Never place Supabase service_role/secret keys in index.html or manager.html.
+- The SQL policies are the enforcement layer. Do not remove row-level security.
+- Public approved player profiles include player name, position, preferred foot, previous club, bio and photo. Applicant contact details remain restricted to managers.
+- This ZIP does not include your Supabase account credentials. Until configured and deployed, registration submission is intentionally inactive.
+- For production use, consider email verification, CAPTCHA/rate limiting, retention rules, and a private storage bucket with signed photo URLs if you want player photos hidden until approval.
