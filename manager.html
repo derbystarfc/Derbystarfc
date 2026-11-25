@@ -21,8 +21,15 @@ function msg(t){$('message').textContent=t}
 async function sessionCheck(){if(!db){$('loginMsg').textContent='Setup required: add the Supabase project URL and anon key.';return;}const {data}=await db.auth.getSession();if(data.session)await showDashboard();}
 async function showDashboard(){
  const {data:{user}}=await db.auth.getUser();
- const {data:manager,error}=await db.from('manager_users').select('user_id').eq('user_id',user.id).maybeSingle();
- if(error||!manager){await db.auth.signOut();$('loginMsg').textContent='This account is not authorized as a Derby Star FC manager.';return;}
+ const {data:isManager,error}=await db.rpc('is_derby_manager');
+
+if(error || isManager !== true){
+  await db.auth.signOut();
+  $('loginMsg').textContent = error
+    ? 'Manager verification failed: ' + error.message
+    : 'This account is not authorized as a Derby Star FC manager.';
+  return;
+}
  $('login').classList.add('hidden');$('dashboard').classList.remove('hidden');await loadApps();
 }
 async function loadApps(){
