@@ -383,11 +383,12 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closePhotoViewer();
 });
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 function showProfiles(rows){
- const markup=rows.length?rows.map(p=>`<article class="panel player-card">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="Photo of ${esc(p.full_name)}">`:'<div style="height:230px;display:grid;place-items:center;background:#edf0f5;color:#667085">No photo</div>'}<div class="player-info"><h3>${esc(p.full_name)}</h3><div class="player-meta"><strong>${esc(p.position)}</strong><br>Preferred foot: ${esc(p.preferred_foot||'Not stated')}<br>Previous club: ${esc(p.previous_club||'Not stated')}<br>${esc(p.bio||'')}</div></div></article>`).join(''):'<div class="panel"><p>Approved player profiles will appear here.</p></div>';
+ const markup=rows.length?rows.map(p=>`<article class="panel player-card">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="Photo of ${esc(p.full_name)}">`:'<div style="height:180px;display:grid;place-items:center;background:#edf0f5;color:#667085">No photo</div>'}<div class="player-info"><h3>${esc(p.full_name)}</h3><div class="player-meta"><strong>${esc(p.position)}</strong><br>Preferred foot: ${esc(p.preferred_foot||'Not stated')}<br>Previous club: ${esc(p.previous_club||'Not stated')}<br>${esc(p.bio||'')}</div></div></article>`).join(''):'<div class="panel"><p>Approved player profiles will appear here.</p></div>';
  document.getElementById('publicSquad').innerHTML=markup;
- document.getElementById('playerProfiles').innerHTML=markup;
 }
+
 async function loadApproved(){
  if(!db){showProfiles([]);return;}
  const {data,error}=await db.from('player_applications').select('id,full_name,position,preferred_foot,previous_club,bio,photo_url').eq('status','APPROVED').order('created_at',{ascending:false});
