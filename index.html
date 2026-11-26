@@ -228,6 +228,10 @@ td:first-child{font-weight:800;color:#07133e}
   <small>Official club website</small>
 
 </footer>
+  <div class="photo-lightbox" id="photoLightbox" aria-modal="true" role="dialog" aria-label="Photo viewer">
+  <button type="button" id="closePhotoLightbox" aria-label="Close photo">✕ Close</button>
+  <img id="lightboxImage" src="" alt="Enlarged photograph">
+</div>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const SUPABASE_URL = 'https://naeobofkxydobzdzhsiq.supabase.co';
@@ -235,6 +239,39 @@ const SUPABASE_ANON_KEY = 'sb_publishable_5tTsV1siTHRheib-qVcIdA__MuP49w6';
 const configured = !SUPABASE_URL.startsWith('PASTE_') && !SUPABASE_ANON_KEY.startsWith('PASTE_');
 const db = configured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const form=document.getElementById('playerForm');
+  const lightbox = document.getElementById('photoLightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const closeLightbox = document.getElementById('closePhotoLightbox');
+
+document.addEventListener('click', function(e) {
+  const photo = e.target.closest('.gallery-item img, .player-card img');
+
+  if (photo && lightbox && lightboxImage) {
+    lightboxImage.src = photo.currentSrc || photo.src;
+    lightboxImage.alt = photo.alt || 'Club photograph';
+    lightbox.classList.add('open');
+  }
+});
+
+function closePhotoViewer() {
+  if (!lightbox) return;
+  lightbox.classList.remove('open');
+  lightboxImage.src = '';
+}
+
+if (closeLightbox) {
+  closeLightbox.addEventListener('click', closePhotoViewer);
+}
+
+if (lightbox) {
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closePhotoViewer();
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePhotoViewer();
+});
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function showProfiles(rows){
  const markup=rows.length?rows.map(p=>`<article class="panel player-card">${p.photo_url?`<img src="${esc(p.photo_url)}" alt="Photo of ${esc(p.full_name)}">`:'<div style="height:230px;display:grid;place-items:center;background:#edf0f5;color:#667085">No photo</div>'}<div class="player-info"><h3>${esc(p.full_name)}</h3><div class="player-meta"><strong>${esc(p.position)}</strong><br>Preferred foot: ${esc(p.preferred_foot||'Not stated')}<br>Previous club: ${esc(p.previous_club||'Not stated')}<br>${esc(p.bio||'')}</div></div></article>`).join(''):'<div class="panel"><p>Approved player profiles will appear here.</p></div>';
