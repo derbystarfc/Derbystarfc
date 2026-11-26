@@ -131,6 +131,46 @@ td:first-child{font-weight:800;color:#07133e}
   font-size: 20px;
   cursor: pointer;
 }
+  /* COACH SECTION LAYOUT */
+.coach-home {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 22px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e4e8f0;
+}
+
+.coach-home img {
+  width: 220px;
+  height: 240px;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.coach-home > div {
+  flex: 1;
+  min-width: 0;
+}
+
+@media(max-width:600px) {
+  .coach-home {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .coach-home img {
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
+  }
+}
 </style></head>
 <body>
 <header><div class="nav">
