@@ -89,6 +89,48 @@ td:first-child{font-weight:800;color:#07133e}
 .player-card{overflow:hidden;padding:0}.player-card img{width:100%;height:230px;object-fit:cover;display:block;background:#edf0f5}.player-card .player-info{padding:18px}.player-card h3{margin:0 0 5px}.player-meta{font-size:12px;color:#667085;line-height:1.6}.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}.gallery-item{margin:0;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e4e8f0}.gallery-item img{width:100%;height:260px;object-fit:cover;display:block}.gallery-item figcaption{padding:10px 13px;font-size:12px;font-weight:800;color:#07133e}.profile-photo-preview{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid #e4e8f0}
 @media(max-width:760px){.gallery-grid{grid-template-columns:1fr 1fr}.gallery-item img{height:180px}}
 @media(max-width:480px){.gallery-grid{grid-template-columns:1fr}}
+  /* CLICKABLE PHOTO EFFECT */
+.gallery-item img,
+.player-card img {
+  cursor: zoom-in;
+  transition: transform .25s ease;
+}
+
+/* PHOTO VIEWER */
+.photo-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.92);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.photo-lightbox.open {
+  display: flex;
+}
+
+.photo-lightbox img {
+  max-width: 95%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.photo-lightbox button {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: #e51d2a;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  padding: 10px 16px;
+  font-size: 20px;
+  cursor: pointer;
+}
 </style></head>
 <body>
 <header><div class="nav">
